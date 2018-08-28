@@ -1,0 +1,84 @@
+.list{
+  border: 2px #f0f0f0 solid;
+  padding: 25px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+.list-flex{
+  display: flex;
+  justify-content: space-between;
+}
+.list .col-l{
+  width: 47%;
+}
+.list .col-r{
+  width: 52%;
+}
+
+.list-preview .logo{
+  width: 120px;
+  margin-right: 20px;
+}
+
+.list-preview .header h2{
+  margin-top: 5px;
+}
+.list-preview .header p{
+  color: #7a7a7a;
+  margin: 7px 0;
+}
+.list-preview .rate span{
+  padding: 5px 12px;
+  background: #fdc53d;
+  color: #FFFFFF;
+  border-radius: 3px;
+  font-size: 13px;
+}
+.list-collapsed{
+  /* display: none; */
+  margin-top: 20px;
+
+}
+.list-collapsed ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.list-collapsed ul.details li{
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.list-collapsed ul.details li p{
+  width: 40%;
+  font-weight: 700;
+  margin: 0;
+}
+
+.list-collapsed ul.table li{
+  display: flex;
+  text-align: center;
+}
+.list-collapsed ul.table .th{
+  background: #b5b5b5;
+  color: #FFFFFF;
+}
+
+.list-collapsed ul.table .col{
+  padding: 7px 0;
+  box-sizing: content-box;
+}
+.list-collapsed ul.table .col-2{
+  width: 20%;
+}
+.list-collapsed ul.table .col-5{
+  width: 40%;
+}
+.list-collapsed ul.table .tbody{
+  max-height: 95px;
+  overflow: auto;
+}
+.list-collapsed ul.table .tbody li:nth-of-type(even){
+  background: #EEEEEE;
+}

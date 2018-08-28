@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+}
+
+.App .container{
+  max-width: 960px;
+  margin: 0px auto;
+  width: 100%;
+  padding-top: 40px;
+}
