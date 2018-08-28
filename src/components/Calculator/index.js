@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from "styled-components";
-import { getRates, getAveInterest } from '../../actions/rates';
+import { getData } from '../../actions/rates';
 import Input from './Input/Input';
 import List from './List/List';
 
@@ -17,8 +17,7 @@ class Calculator extends Component {
       bankRates: "https://qa.omh.sg/techtest/calculator/bankRates",
       average: "https://qa.omh.sg/techtest/calculator/bankRates/simplified"
     }
-    this.props.getRates(url.bankRates);
-    this.props.getAveInterest(url.average);
+    this.props.getData(url);
   }
 
   render() {
@@ -32,8 +31,7 @@ class Calculator extends Component {
 }
 
 const mapDispatchToProps = {
-  getRates,
-  getAveInterest,
+  getData
 };
 
 

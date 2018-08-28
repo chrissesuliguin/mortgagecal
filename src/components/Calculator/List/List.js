@@ -10,9 +10,17 @@ const Container = styled.div`
 `;
 
 class List extends Component {
+
+  getPercent(data){
+    return String((data.principleVal / data.monthlyLoan) * 100);
+  }
+  getDecimal(num){
+    return Number(num).toFixed(2);
+  }
   
   render(){
     const bankRates = this.props.rates;
+    const aveRate = this.props.averageRate.averageFirstYearInterestRate;
     const suffix = ['st', 'nd', 'rd', 'th'];
     return(
       <Container>
@@ -24,22 +32,24 @@ class List extends Component {
           bankImageUrl,
           lockInPeriod,
           rateTypeName,
+          monthlyAmortization = {},
           totalRepayment = 0,
           computedMonthly = [],
-        }) => 
+        }) =>
           <section className="list" key={_id}>
             <div className="list-preview list-flex">
               <div className="col-l flex-center">
                 <img src={bankImageUrl} alt={bankName} className="logo"/>
                 <div className="header">
                   <h2>{rateName}</h2>
-                  <p>Interest Rate 1.35%</p>
-                  <h1>$1,880 / month</h1>
+                  <p>Interest Rate {this.getDecimal(aveRate)}%</p>
+                  <h1>${this.getDecimal(monthlyAmortization.monthlyLoan)} / month</h1>
                 </div>
               </div>
-              <div className="col-r rate">
-                <span>Best Rate</span>
-                <p>Range</p>
+              <div className="col-r rate flex">
+                <p>Principal<br/><b>${this.getDecimal(monthlyAmortization.principleVal)}</b></p>
+                <progress value={ this.getPercent(monthlyAmortization) } max="100" />
+                <p>Interest<br/><b>${this.getDecimal(monthlyAmortization.interestVal)}</b></p>
               </div>
             </div>
             <div className="list-collapsed list-flex">
@@ -52,7 +62,7 @@ class List extends Component {
                     <p>Lock-in Period:</p> {lockInPeriod}
                   </li>
                   <li>
-                    <p>Total repayment:</p> ${totalRepayment.toFixed(2)}
+                    <p>Total repayment:</p> ${this.getDecimal(totalRepayment)}
                   </li>
                 </ul>
               </div>
@@ -70,7 +80,7 @@ class List extends Component {
                         <li key={i}>
                           <div className="col col-2"> {i+1}{suffix[i < 4 ? i : 3]} </div>
                           <div className="col col-5"> {item.interestRatesDetails} </div>
-                          <div className="col col-5"> {item.monthlyLoan.toFixed(2)} </div>
+                          <div className="col col-5"> {this.getDecimal(item.monthlyLoan)} </div>
                         </li>
                       ))
                     }
@@ -88,6 +98,7 @@ class List extends Component {
 
 const mapStateToProps = state => ({
   rates: state.rates.get('bankRates').toJS(),
+  averageRate: state.rates.get('aveInterestRate'),
 });
 
 export default connect(mapStateToProps, null)(List);

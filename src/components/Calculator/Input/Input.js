@@ -44,7 +44,10 @@ class Input extends Component {
           </div>
           <div className="calcu-input">
             <label>Loan Amount:</label>
-            <input type="number" value={this.state.loan} />
+            <input 
+              type="number"
+              value={this.state.loan}
+              onChange={(e) => this.saveState('loan', e.target.value)}/>
           </div>
           <div className="calcu-input">
             <label>Tenure Years:</label>

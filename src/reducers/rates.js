@@ -18,14 +18,15 @@ function rates(
       return state.set('bankRates', fromJS(payload.data));
 
     case types.GET_AVE_INTEREST_SUCCESS:
-      return state.set('aveInterestRate', fromJS(payload.data));
+      return state.set('aveInterestRate', payload.data);
 
     case types.SAVE_INPUT:
       return state.set('input', Map(payload.data));
       
     case types.SAVE_MONTHLY_REPAYMENT:
       return state.setIn(['bankRates', payload.id, 'computedMonthly'], payload.data.computedMonthly)
-                  .setIn(['bankRates', payload.id, 'totalRepayment'], payload.data.totalRepayment);
+                  .setIn(['bankRates', payload.id, 'totalRepayment'], payload.data.totalRepayment)
+                  .setIn(['bankRates', payload.id, 'monthlyAmortization'], payload.data.monthlyAmortization);
     default:
       return state;
   }

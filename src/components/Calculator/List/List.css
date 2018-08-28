@@ -27,9 +27,17 @@
   color: #7a7a7a;
   margin: 7px 0;
 }
+.list-preview .rate{
+  justify-content: space-between;
+  align-items: center;
+}
+.list-preview .rate progress{
+  height: 30px;
+  width: 270px;
+}
 .list-preview .rate span{
   padding: 5px 12px;
-  background: #fdc53d;
+  background: #080806;
   color: #FFFFFF;
   border-radius: 3px;
   font-size: 13px;

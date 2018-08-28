@@ -2,9 +2,18 @@ import axios from 'axios';
 import * as types from '../constants/ActionTypes';
 import { calculate } from './calculate';
 
-export const getRates = (api) => {
+export const getData = ({bankRates, average}) => {
   return (dispatch) => {
-    axios.get(api).then((response) => {
+    dispatch(getAveInterest(average)).then(() => {
+      dispatch(getRates(bankRates));
+    });
+   
+  }
+};
+
+export const getRates = (url) => {
+  return (dispatch) => {
+    axios.get(url).then((response) => {
       const {status, data} = response;
       if(status){
         dispatch(getRatesSuccess(data));
@@ -28,9 +37,9 @@ export const getRatesSuccess = (data) => {
   }
 };
 
-export const getAveInterest = (api) => {
+export function getAveInterest (url) {
   return (dispatch) => {
-    axios.get(api).then((response) => {
+    return axios.get(url).then((response) => {
       const {status, data} = response;
       if(status){
         dispatch(getAveInterestSuccess(data));
@@ -39,10 +48,6 @@ export const getAveInterest = (api) => {
     .catch((err) => {
       console.log(err)
     })
-  
-    return {
-      type: types.GET_AVE_INTEREST
-    };
   };
 };
 export const getAveInterestSuccess = (data) => {
