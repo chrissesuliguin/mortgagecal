@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as types from '../constants/ActionTypes';
+import { calculate } from './calculate';
 
 export const getRates = (api) => {
   return (dispatch) => {
@@ -7,6 +8,7 @@ export const getRates = (api) => {
       const {status, data} = response;
       if(status){
         dispatch(getRatesSuccess(data));
+        dispatch(calculate());
       }
     })
     .catch((err) => {

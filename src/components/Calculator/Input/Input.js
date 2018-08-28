@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from "styled-components";
-import { calculate } from '../../../actions/calculate';
+import { calculateInput } from '../../../actions/calculate';
 import './Input.css';
 
 const Container = styled.section`
@@ -12,22 +11,24 @@ const Container = styled.section`
 
 class Input extends Component {
 
-  constructor(){
-    super()
+  constructor(props){
+    super(props);
     this.years = [5, 10, 15, 20, 25];
-    this.state = {
-      price: '',
-      loan: '',
-      tenure: ''
-    };
+    this.state = this.props.input;
+  }
+
+  computeLoan(price){
+    return price * 0.8;
   }
 
   saveState(name, value) {
     this.setState({[name]: value});
+    if(name === 'price')
+      this.setState({'loan': this.computeLoan(value)});
   }
 
   submit() {
-    this.props.calculate(this.state)
+    this.props.calculateInput(this.state)
   }
 
   render() {
@@ -36,11 +37,14 @@ class Input extends Component {
         <div className="calcu">
           <div className="calcu-input">
             <label>Property Price:</label>
-            <input type="number" onChange={(e) => this.saveState('price', e.target.value)} />
+            <input
+              type="number"
+              value={this.state.price}
+              onChange={(e) => this.saveState('price', e.target.value)} />
           </div>
           <div className="calcu-input">
             <label>Loan Amount:</label>
-            <input type="number" onChange={(e) => this.saveState('loan', e.target.value)} />
+            <input type="number" value={this.state.loan} />
           </div>
           <div className="calcu-input">
             <label>Tenure Years:</label>
@@ -64,11 +68,11 @@ class Input extends Component {
 }
 
 const mapDispatchToProps = {
-  calculate
+  calculateInput
 };
 
-// const mapStateToProps = ({
-//   price: ''
-// })
+const mapStateToProps = state => ({
+  input: state.rates.get('input').toJS(),
+});
 
-export default connect(null, mapDispatchToProps)(Input)
+export default connect(mapStateToProps, mapDispatchToProps)(Input)

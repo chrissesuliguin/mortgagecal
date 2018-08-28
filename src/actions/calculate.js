@@ -1,11 +1,15 @@
 import * as types from '../constants/ActionTypes';
 import { List, Map, fromJS } from 'immutable';
-export const calculate = data => {
+export const calculateInput = data => {
   return (dispatch, getState) => {
-    
     dispatch(saveInput(data));
-
+    dispatch(calculate());
+  }
+};
+export const calculate = () => {
+  return (dispatch, getState) => {
     const banks = getState().rates.get('bankRates').toJS();
+    const inputVal = getState().rates.get('input').toJS();
     banks.map((bank, index) => {
       const repayment = {
         computedMonthly: [],
@@ -15,7 +19,7 @@ export const calculate = data => {
       const rateDetails = List(interestRatesDetails).toJS();
 
       interestRates.map((interestRate, i) => {
-        const { loan, tenure } = data;
+        const { loan, tenure } = inputVal;
         const rated = (interestRate / 100) / 12;
         const monthlyLoanDenom = Math.pow((1 + rated), (tenure * 12)) - 1;
         const monthlyLoanNomin = rated * (Math.pow((1 + rated), (tenure * 12)));
